@@ -1,37 +1,74 @@
+# require modules here
 require 'yaml'
+require 'pry'
 
-# Write a method that loads the emoticons.yml file.
-def load_library(path)
-  #set a hash with get_meaning, get_emoticon as keys, empty hash for value
-  emoticons = {"get_meaning" => {}, "get_emoticon" => {}}
-  #load the YAML file. It has meaning(angel, angry,..) as key and the symbol as value(describe)
-  YAML.load_file(path).each do |meaning, describe|
-     #set eng, jan from describe, so eng would be the first value, jan the second
-     eng, jan = describe
-     emoticons["get_meaning"][jan] = meaning
-     emoticons["get_emoticon"][eng] = jan
+def load_library(emoticons)
+  # code goes here
 
+inner_hash = {}
+other_inner_hash = {}
+
+lib = YAML::load_file(File.join(__dir__, 'emoticons.yml'))
+
+
+  lib.each do |meaning, emo_arr|
+    eng_emo = emo_arr[0]
+    jap_emo = emo_arr[1]
+
+    inner_hash[jap_emo] = meaning
+    other_inner_hash[eng_emo] = jap_emo
   end
-  emoticons
+
+  lib.reject! { |k,v| k }
+  lib["get_meaning"] = inner_hash
+  lib["get_emoticon"] = other_inner_hash
+
+  lib
+
+lib.each do |meaning, emo_arr|
+  eng_emo = emo_arr[0]
+  jap_emo = emo_arr[1]
+
+  inner_hash[jap_emo] = meaning
+  other_inner_hash[eng_emo] = jap_emo
 end
 
-def get_japanese_emoticon(path, emoticon)
-  emoticons = load_library(path) #call load_library
-  result = emoticons["get_emoticon"][emoticon]
-  if result
-    result
-  else
-    "Sorry, that emoticon was not found"
-  end
+lib["get_meaning"] = inner_hash
+lib["get_emoticon"] = other_inner_hash
+
+lib.reject! { |k,v| k != get_meaning || k != get_emoticon }
+
+lib
+
+
 end
 
 
-def get_english_meaning(path, emoticon)
-  emoticons = load_library(path)
-  result = emoticons["get_meaning"][emoticon] #the same above but change get_meaning
-  if result
-    result
-  else
-    "Sorry, that emoticon was not found"
+
+
+
+def get_japanese_emoticon(emoticons, get_emoticon)
+  # code goes here
+  load_library(emoticons)["get_emoticon"].each do |k, v|
+    if get_emoticon == k
+      return v
+
+    end
+
   end
+"Sorry, that emoticon was not found"
+end
+
+
+
+def get_english_meaning(emoticons, get_meaning)
+  # code goes here
+
+  load_library(emoticons)["get_meaning"].each do |k, v|
+    if get_meaning == k
+      return v
+    end
+  end
+  "Sorry, that emoticon was not found"
+
 end
