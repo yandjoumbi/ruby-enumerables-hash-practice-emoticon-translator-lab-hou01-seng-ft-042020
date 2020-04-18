@@ -1,14 +1,14 @@
 # require modules here
 require 'yaml'
 require 'pry'
-
+lib = YAML::load_file(File.join(__dir__, 'emoticons.yml'))
 def load_library(emoticons)
   # code goes here
 
 inner_hash = {}
 other_inner_hash = {}
 
-lib = YAML::load_file(File.join(__dir__, 'emoticons.yml'))
+
 
 
   lib.each do |meaning, emo_arr|
