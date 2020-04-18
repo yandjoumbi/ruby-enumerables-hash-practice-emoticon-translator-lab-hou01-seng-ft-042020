@@ -24,23 +24,9 @@ lib = YAML::load_file(File.join(__dir__, 'emoticons.yml'))
   lib["get_emoticon"] = other_inner_hash
 
   lib
-lib.each do |meaning, emo_arr|
-  eng_emo = emo_arr[0]
-  jap_emo = emo_arr[1]
-
-  inner_hash[jap_emo] = meaning
-  other_inner_hash[eng_emo] = jap_emo
 end
 
-lib["get_meaning"] = inner_hash
-lib["get_emoticon"] = other_inner_hash
 
-lib.reject! { |k,v| k != get_meaning || k != get_emoticon }
-
-lib
-
-
-end
 
 
 
@@ -56,11 +42,10 @@ def get_japanese_emoticon(emoticons, get_emoticon)
 
   end
 "Sorry, that emoticon was not found"
-def get_japanese_emoticon
-  # code goes here
-
-
 end
+
+
+
 
 def get_english_meaning(emoticons, get_meaning)
   # code goes here
@@ -71,6 +56,5 @@ def get_english_meaning(emoticons, get_meaning)
     end
   end
   "Sorry, that emoticon was not found"
-
 
 end
