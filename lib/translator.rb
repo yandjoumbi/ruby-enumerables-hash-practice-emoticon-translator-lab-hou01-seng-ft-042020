@@ -2,7 +2,7 @@ require 'yaml'
 require 'pry'
 
 
-  
+
   def load_library(emoticons)
 
   inner_hash = {}
@@ -42,7 +42,7 @@ def get_japanese_emoticon(emoticons, get_emoticon)
 
 
 def get_english_meaning(emoticons, get_meaning)
-  
+
   load_library(emoticons)["get_meaning"].each do |k, v|
       if get_meaning == k
         return v
@@ -50,4 +50,3 @@ def get_english_meaning(emoticons, get_meaning)
     end
     "Sorry, that emoticon was not found"
   end
-
