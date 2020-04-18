@@ -1,30 +1,17 @@
 require 'yaml'
 require 'pry'
 
-
-
-  def load_library(emoticons)
-
-  inner_hash = {}
-  other_inner_hash = {}
-
-  lib = YAML::load_file(File.join(__dir__, 'emoticons.yml'))
-
-    lib.each do |meaning, emo_arr|
-      eng_emo = emo_arr[0]
-      jap_emo = emo_arr[1]
-
-      inner_hash[jap_emo] = meaning
-      other_inner_hash[eng_emo] = jap_emo
-    end
-
-    lib.reject! { |k,v| k }
-    lib["get_meaning"] = inner_hash
-    lib["get_emoticon"] = other_inner_hash
-
-    lib
-
+def load_library (file)
+  # code goes here	  
+  emotes_src = YAML.load_file(file)
+  emoticons = {}
+  emotes_src.each do |key, value|
+    emoticons[key] = {}
+    emoticons[key][:english] = value[0]
+    emoticons[key][:japanese] = value[1]
   end
+  emoticons
+end	
 
 def get_japanese_emoticon(emoticons, get_emoticon)
 
